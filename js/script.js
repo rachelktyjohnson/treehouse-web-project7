@@ -9,3 +9,30 @@ job_role.addEventListener('change', (e)=>{
         other_job_role.style.display="none";
     }
 })
+
+let shirt_colors = document.getElementById('shirt-colors');
+shirt_colors.style.display = "none";
+
+let shirt_designs = document.getElementById('shirt-designs');
+shirt_designs.addEventListener('change',(e)=>{
+    shirt_colors.style.display = "block";
+    let all_colors = document.querySelectorAll('[data-theme]');
+    for (let i=0; i<all_colors.length; i++){
+        all_colors[i].removeAttribute('hidden');
+    }
+    if (e.target.value === 'js puns'){
+        document.querySelector('[data-theme="js puns"]').selected = true;
+        let all_heart = document.querySelectorAll('[data-theme="heart js"]')
+        for (let i=0; i<all_heart.length; i++){
+            all_heart[i].setAttribute('hidden', "hidden");
+        }
+    } else if (e.target.value === 'heart js'){
+        document.querySelector('[data-theme="heart js"]').selected = true;
+        let all_puns = document.querySelectorAll('[data-theme="js puns"]')
+        for (let i=0; i<all_puns.length; i++){
+            all_puns[i].setAttribute('hidden', "hidden");
+        }
+    } else {
+        shirt_colors.style.display = "none";
+    }
+})
