@@ -76,3 +76,21 @@ activities_fieldset.addEventListener('change', (e)=>{
     }
     total_cost_string.innerText = `Total: $${total_cost_int}`;
 })
+
+document.getElementById('paypal').style.display = "none";
+document.getElementById('bitcoin').style.display = "none";
+
+let payment = document.getElementById('payment');
+payment.addEventListener('change', (e)=>{
+    //console.log(e.target.value);
+    document.getElementById('paypal').style.display = "none";
+    document.getElementById('bitcoin').style.display = "none";
+    document.getElementById('credit-card').style.display = "none";
+    if (e.target.value === 'credit-card'){
+        document.getElementById('credit-card').style.display = "block";
+    } else if (e.target.value === 'paypal'){
+        document.getElementById('paypal').style.display = "block";
+    } else if (e.target.value === 'bitcoin'){
+        document.getElementById('bitcoin').style.display = "block";
+    }
+})
