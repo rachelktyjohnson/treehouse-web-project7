@@ -145,8 +145,10 @@ function checkName(name){
 function checkEmail(email) {
     //woo regex!
     const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (regex.test(String(email.value).toLowerCase()) === false){
-        return setParentValid(email, false);
+    if (email.value===""){
+        return setParentValid(email, false, "Email field should be filled in")
+    } else if (regex.test(String(email.value).toLowerCase()) === false){
+        return setParentValid(email, false, "Email address must be formatted correctly");
     } else {
         return setParentValid(email, true);
     }
@@ -199,7 +201,7 @@ function checkCVV(cvv){
 }
 
 //sets all the classes and adds hint box for parent elements (basic input fields with labels)
-function setParentValid(element, setValid){
+function setParentValid(element, setValid, message=""){
     if (setValid){
         element.parentNode.classList.add('valid');
         element.parentNode.classList.remove('not-valid')
@@ -209,6 +211,9 @@ function setParentValid(element, setValid){
         element.parentNode.classList.add('not-valid');
         element.parentNode.classList.remove('valid')
         element.parentNode.lastElementChild.style.display = "block";
+        if (message!==""){
+            element.parentNode.lastElementChild.innerHTML = message;
+        }
         return false;
     }
 }

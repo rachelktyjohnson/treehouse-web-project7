@@ -14,3 +14,6 @@ Validating user input and providing helpful error messages when the user enters 
 - Added to email field
 - Added to Activities fieldset
 - Added to credit card info
+
+## Conditional error message
+- Email field hint message changes whether the field is valid or empty
