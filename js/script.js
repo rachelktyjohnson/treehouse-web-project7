@@ -41,10 +41,38 @@ let activities_fieldset = document.getElementById('activities');
 activities_fieldset.addEventListener('change', (e)=>{
     let total_cost_string = document.getElementById('activities-cost');
     let total_cost_int = parseInt(total_cost_string.innerText.replace(/\D/g, ''));
+    //console.log(e.target); //e.target is the input
+    let day_and_time = e.target.dataset.dayAndTime;
+
+    //loop over all the activities
+    let all_activities = document.querySelectorAll('#activities-box label input');
+
     if (e.target.checked){
+
+        //add to total
         total_cost_int += parseInt(e.target.dataset.cost);
+
+        //loop over all activities and disable other options with the same data-day-and-time
+        for (let i=0; i<all_activities.length; i++){
+            if (all_activities[i].dataset.dayAndTime===day_and_time && all_activities[i]!==e.target){
+                all_activities[i].parentNode.classList.add('disabled');
+                all_activities[i].setAttribute('disabled','disabled');
+            }
+        }
+
     } else {
+
+        //remove from total
         total_cost_int -= parseInt(e.target.dataset.cost);
+
+        //loop over all activities and enable other options with the same data-day-and-time
+        for (let i=0; i<all_activities.length; i++){
+            if (all_activities[i].dataset.dayAndTime===day_and_time){
+                all_activities[i].parentNode.classList.remove('disabled');
+                all_activities[i].removeAttribute('disabled');
+            }
+        }
+
     }
     total_cost_string.innerText = `Total: $${total_cost_int}`;
 })
