@@ -107,15 +107,21 @@ payment.addEventListener('change', (e)=>{
 //////////form validation
 
 let form = document.querySelector('form');
+let name = document.getElementById('name');
+let email = document.getElementById('email');
+let card_number = document.getElementById('cc-num');
+let zip = document.getElementById('zip');
+let cvv = document.getElementById('cvv');
+
 form.addEventListener('submit', (e)=>{
     let all_validated = true;
-    all_validated *= checkName(document.getElementById('name'));
-    all_validated *= checkEmail(document.getElementById('email').value);
+    all_validated *= checkName(name);
+    all_validated *= checkEmail(email);
     all_validated *= checkActivities();
     if (payment.value==="credit-card"){
-        all_validated *= checkCardNumber(document.getElementById('cc-num').value)
-        all_validated *= checkZip(document.getElementById('zip').value)
-        all_validated *= checkCVV(document.getElementById('cvv').value)
+        all_validated *= checkCardNumber(card_number)
+        all_validated *= checkZip(zip)
+        all_validated *= checkCVV(cvv)
     }
     if(!all_validated){
         e.preventDefault();
@@ -123,28 +129,29 @@ form.addEventListener('submit', (e)=>{
 
 })
 
-//check name function
+/// CHECKING HELPERS
+
+//check name is not empty
 function checkName(name){
     if( name.value==="" || name.value==null){
-        name.parentNode.classList.add('not-valid');
-        name.parentNode.classList.remove('valid')
-        name.parentNode.lastElementChild.style.display = "block";
-        return false;
+        return setParentValid(name, false);
     } else {
-        name.parentNode.classList.add('valid');
-        name.parentNode.classList.remove('not-valid')
-        name.parentNode.lastElementChild.style.display = "none";
-        return true;
+        return setParentValid(name, true);
     }
 }
 
-//check email address
+//check email address is valid email string
 function checkEmail(email) {
     //woo regex!
     const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return regex.test(String(email).toLowerCase());
+    if (regex.test(String(email.value).toLowerCase()) === false){
+        return setParentValid(email, false);
+    } else {
+        return setParentValid(email, true);
+    }
 }
 
+//check activities
 function checkActivities(){
     let all_activities = document.querySelectorAll('#activities-box label input');
     for (let i=0; i<all_activities.length; i++){
@@ -155,17 +162,68 @@ function checkActivities(){
     return false;
 }
 
+//check card is all numbers are 13-16 digits long inclusive
 function checkCardNumber(card_number){
-    return /^\d+$/.test(card_number) && card_number.length<=16 && card_number.length>=13;
+    let value = card_number.value;
+    if (/^\d+$/.test(value) && value.length<=16 && value.length>=13){
+        return setParentValid(card_number, true);
+    } else {
+        return setParentValid(card_number, false);
+    }
 }
 
+//check zip code is all numbers and 5 length
 function checkZip(zip){
-    return /^\d+$/.test(zip) && zip.length===5;
-}
-function checkCVV(cvv){
-    return /^\d+$/.test(cvv) && cvv.length===3;
+    if(/^\d+$/.test(zip) && zip.length===5){
+        return setParentValid(zip, true)
+    } else {
+        return setParentValid(zip, false);
+    }
 }
 
+//check zip code is all numbers and 3 length
+function checkCVV(cvv){
+    if (/^\d+$/.test(cvv) && cvv.length===3){
+        return setParentValid(cvv, true);
+    } else {
+        return setParentValid(cvv, false);
+    }
+}
+
+//sets all the classes and adds hint box for parent elements (basic input fields with labels)
+function setParentValid(element, setValid){
+    if (setValid){
+        element.parentNode.classList.add('valid');
+        element.parentNode.classList.remove('not-valid')
+        element.parentNode.lastElementChild.style.display = "none";
+        return true;
+    } else {
+        element.parentNode.classList.add('not-valid');
+        element.parentNode.classList.remove('valid')
+        element.parentNode.lastElementChild.style.display = "block";
+        return false;
+    }
+}
+
+//keyup listeners
+name.addEventListener('keyup',()=>{
+    checkName(name);
+})
+email.addEventListener('keyup', ()=>{
+    checkEmail(email);
+})
+
+card_number.addEventListener('keyup', ()=>{
+    checkCardNumber(card_number);
+})
+
+zip.addEventListener('keyup', ()=>{
+    checkZip(zip);
+})
+
+cvv.addEventListener('keyup', ()=> {
+    checkCVV(cvv);
+})
 
 ///focus and blur
 for (let i=0; i<all_activities.length; i++){

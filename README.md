@@ -7,3 +7,8 @@ Using the supplied HTML and CSS files, you'll add your JavaScript to make the fo
 
 Adding customized and conditional behavior and interactivity
 Validating user input and providing helpful error messages when the user enters invalid information into the form fields.
+
+
+## Real-time error messages
+- Added to name field
+- Added to email field
