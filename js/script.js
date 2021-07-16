@@ -1,3 +1,5 @@
+
+//job roles
 let other_job_role = document.getElementById('other-job-role');
 other_job_role.style.display="none";
 
@@ -10,6 +12,8 @@ job_role.addEventListener('change', (e)=>{
     }
 })
 
+
+//shirt color & design
 let shirt_colors = document.getElementById('shirt-colors');
 shirt_colors.style.display = "none";
 
@@ -37,6 +41,8 @@ shirt_designs.addEventListener('change',(e)=>{
     }
 })
 
+
+//activities
 let activities_fieldset = document.getElementById('activities');
 activities_fieldset.addEventListener('change', (e)=>{
     let total_cost_string = document.getElementById('activities-cost');
@@ -77,10 +83,12 @@ activities_fieldset.addEventListener('change', (e)=>{
     total_cost_string.innerText = `Total: $${total_cost_int}`;
 })
 
+
+//payment
+let payment = document.getElementById('payment');
 document.getElementById('paypal').style.display = "none";
 document.getElementById('bitcoin').style.display = "none";
 
-let payment = document.getElementById('payment');
 payment.addEventListener('change', (e)=>{
     //console.log(e.target.value);
     document.getElementById('paypal').style.display = "none";
@@ -94,3 +102,56 @@ payment.addEventListener('change', (e)=>{
         document.getElementById('bitcoin').style.display = "block";
     }
 })
+
+
+//////////form validation
+
+let form = document.querySelector('form');
+form.addEventListener('submit', (e)=>{
+    let all_validated = true;
+    all_validated *= checkName(document.getElementById('name').value);
+    all_validated *= checkEmail(document.getElementById('email').value);
+    all_validated *= checkActivities();
+    if (payment.value==="credit-card"){
+        all_validated *= checkCardNumber(document.getElementById('cc-num').value)
+        all_validated *= checkZip(document.getElementById('zip').value)
+        all_validated *= checkCVV(document.getElementById('cvv').value)
+    }
+    if(!all_validated){
+        e.preventDefault();
+    };
+
+})
+
+//check name function
+function checkName(name){
+    return name!=="" || name==null;
+}
+
+//check email addresss
+function checkEmail(email) {
+    //woo regex!
+    const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regex.test(String(email).toLowerCase());
+}
+
+function checkActivities(){
+    let all_activities = document.querySelectorAll('#activities-box label input');
+    for (let i=0; i<all_activities.length; i++){
+        if (all_activities[i].checked){
+            return true;
+        }
+    }
+    return false;
+}
+
+function checkCardNumber(card_number){
+    return /^\d+$/.test(card_number) && card_number.length<=16 && card_number.length>=13;
+}
+
+function checkZip(zip){
+    return /^\d+$/.test(zip) && zip.length===5;
+}
+function checkCVV(cvv){
+    return /^\d+$/.test(cvv) && cvv.length===3;
+}
