@@ -36,3 +36,15 @@ shirt_designs.addEventListener('change',(e)=>{
         shirt_colors.style.display = "none";
     }
 })
+
+let activities_fieldset = document.getElementById('activities');
+activities_fieldset.addEventListener('change', (e)=>{
+    let total_cost_string = document.getElementById('activities-cost');
+    let total_cost_int = parseInt(total_cost_string.innerText.replace(/\D/g, ''));
+    if (e.target.checked){
+        total_cost_int += parseInt(e.target.dataset.cost);
+    } else {
+        total_cost_int -= parseInt(e.target.dataset.cost);
+    }
+    total_cost_string.innerText = `Total: $${total_cost_int}`;
+})
