@@ -44,6 +44,7 @@ shirt_designs.addEventListener('change',(e)=>{
 
 //activities
 let activities_fieldset = document.getElementById('activities');
+let all_activities = document.querySelectorAll('#activities-box label input');
 activities_fieldset.addEventListener('change', (e)=>{
     let total_cost_string = document.getElementById('activities-cost');
     let total_cost_int = parseInt(total_cost_string.innerText.replace(/\D/g, ''));
@@ -51,7 +52,6 @@ activities_fieldset.addEventListener('change', (e)=>{
     let day_and_time = e.target.dataset.dayAndTime;
 
     //loop over all the activities
-    let all_activities = document.querySelectorAll('#activities-box label input');
 
     if (e.target.checked){
 
@@ -128,7 +128,7 @@ function checkName(name){
     return name!=="" || name==null;
 }
 
-//check email addresss
+//check email address
 function checkEmail(email) {
     //woo regex!
     const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -154,4 +154,16 @@ function checkZip(zip){
 }
 function checkCVV(cvv){
     return /^\d+$/.test(cvv) && cvv.length===3;
+}
+
+
+///focus and blur
+for (let i=0; i<all_activities.length; i++){
+    all_activities[i].addEventListener('focus', (e)=>{
+        e.target.parentNode.classList.add('focus');
+    })
+
+    all_activities[i].addEventListener('blur', (e)=>{
+        e.target.parentNode.classList.remove('focus');
+    })
 }
