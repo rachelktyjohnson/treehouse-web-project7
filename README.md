@@ -12,3 +12,5 @@ Validating user input and providing helpful error messages when the user enters 
 ## Real-time error messages
 - Added to name field
 - Added to email field
+- Added to Activities fieldset
+- Added to credit card info

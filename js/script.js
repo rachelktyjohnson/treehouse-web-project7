@@ -46,6 +46,7 @@ shirt_designs.addEventListener('change',(e)=>{
 let activities_fieldset = document.getElementById('activities');
 let all_activities = document.querySelectorAll('#activities-box label input');
 activities_fieldset.addEventListener('change', (e)=>{
+    checkActivities();
     let total_cost_string = document.getElementById('activities-cost');
     let total_cost_int = parseInt(total_cost_string.innerText.replace(/\D/g, ''));
     //console.log(e.target); //e.target is the input
@@ -153,12 +154,19 @@ function checkEmail(email) {
 
 //check activities
 function checkActivities(){
+
     let all_activities = document.querySelectorAll('#activities-box label input');
     for (let i=0; i<all_activities.length; i++){
         if (all_activities[i].checked){
+            all_activities[i].parentNode.parentNode.parentNode.classList.add('valid');
+            all_activities[i].parentNode.parentNode.parentNode.classList.remove('not-valid')
+            all_activities[i].parentNode.parentNode.parentNode.lastElementChild.style.display = "none";
             return true;
         }
     }
+    all_activities[0].parentNode.parentNode.parentNode.classList.add('not-valid');
+    all_activities[0].parentNode.parentNode.parentNode.classList.remove('valid')
+    all_activities[0].parentNode.parentNode.parentNode.lastElementChild.style.display = "block";
     return false;
 }
 
@@ -174,7 +182,7 @@ function checkCardNumber(card_number){
 
 //check zip code is all numbers and 5 length
 function checkZip(zip){
-    if(/^\d+$/.test(zip) && zip.length===5){
+    if(/^\d+$/.test(zip.value) && zip.value.length===5){
         return setParentValid(zip, true)
     } else {
         return setParentValid(zip, false);
@@ -183,7 +191,7 @@ function checkZip(zip){
 
 //check zip code is all numbers and 3 length
 function checkCVV(cvv){
-    if (/^\d+$/.test(cvv) && cvv.length===3){
+    if (/^\d+$/.test(cvv.value) && cvv.value.length===3){
         return setParentValid(cvv, true);
     } else {
         return setParentValid(cvv, false);
