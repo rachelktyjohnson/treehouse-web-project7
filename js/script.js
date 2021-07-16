@@ -109,7 +109,7 @@ payment.addEventListener('change', (e)=>{
 let form = document.querySelector('form');
 form.addEventListener('submit', (e)=>{
     let all_validated = true;
-    all_validated *= checkName(document.getElementById('name').value);
+    all_validated *= checkName(document.getElementById('name'));
     all_validated *= checkEmail(document.getElementById('email').value);
     all_validated *= checkActivities();
     if (payment.value==="credit-card"){
@@ -119,13 +119,23 @@ form.addEventListener('submit', (e)=>{
     }
     if(!all_validated){
         e.preventDefault();
-    };
+    }
 
 })
 
 //check name function
 function checkName(name){
-    return name!=="" || name==null;
+    if( name.value==="" || name.value==null){
+        name.parentNode.classList.add('not-valid');
+        name.parentNode.classList.remove('valid')
+        name.parentNode.lastElementChild.style.display = "block";
+        return false;
+    } else {
+        name.parentNode.classList.add('valid');
+        name.parentNode.classList.remove('not-valid')
+        name.parentNode.lastElementChild.style.display = "none";
+        return true;
+    }
 }
 
 //check email address
