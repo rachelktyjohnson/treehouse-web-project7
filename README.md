@@ -9,11 +9,10 @@ Adding customized and conditional behavior and interactivity
 Validating user input and providing helpful error messages when the user enters invalid information into the form fields.
 
 
-## Real-time error messages
-- Added to name field
+## Real-time AND conditional error messages
+- Added to name field (real-time only)
 - Added to email field
 - Added to Activities fieldset
-- Added to credit card info
-
-## Conditional error message
-- Email field hint message changes whether the field is valid or empty
+- Added to credit card number
+- Added to zip code
+- Added to cvv
