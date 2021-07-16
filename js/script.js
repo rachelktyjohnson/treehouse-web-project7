@@ -175,17 +175,21 @@ function checkActivities(){
 //check card is all numbers are 13-16 digits long inclusive
 function checkCardNumber(card_number){
     let value = card_number.value;
-    if (/^\d+$/.test(value) && value.length<=16 && value.length>=13){
-        return setParentValid(card_number, true);
+    if(value===""){
+        return setParentValid(card_number, false, "Credit card number must not be empty")
+    } else if (/^\d+$/.test(value)===false || value.length>16 || value.length<13){
+        return setParentValid(card_number, false, "Credit card number must be between 13 - 16 digits");
     } else {
-        return setParentValid(card_number, false);
+        return setParentValid(card_number, true);
     }
 }
 
 //check zip code is all numbers and 5 length
 function checkZip(zip){
-    if(/^\d+$/.test(zip.value) && zip.value.length===5){
-        return setParentValid(zip, true)
+    if (zip.value===""){
+        return setParentValid(zip, false, "Zip code must not be empty")
+    } else if(/^\d+$/.test(zip.value)===false || zip.value.length!==5){
+        return setParentValid(zip, false, "Zip Code must be 5 digits")
     } else {
         return setParentValid(zip, false);
     }
@@ -193,10 +197,12 @@ function checkZip(zip){
 
 //check zip code is all numbers and 3 length
 function checkCVV(cvv){
-    if (/^\d+$/.test(cvv.value) && cvv.value.length===3){
-        return setParentValid(cvv, true);
+    if (cvv.value===""){
+        return setParentValid(cvv, false, "CVV must not be empty")
+    } else if (/^\d+$/.test(cvv.value)===false || cvv.value.length!==3){
+        return setParentValid(cvv, false, "CVV must be 3 digits");
     } else {
-        return setParentValid(cvv, false);
+        return setParentValid(cvv, true);
     }
 }
 
