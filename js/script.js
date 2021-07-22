@@ -191,7 +191,7 @@ function checkZip(zip){
     } else if(/^\d+$/.test(zip.value)===false || zip.value.length!==5){
         return setParentValid(zip, false, "Zip Code must be 5 digits")
     } else {
-        return setParentValid(zip, false);
+        return setParentValid(zip, true);
     }
 }
 
